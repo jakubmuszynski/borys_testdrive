@@ -22,3 +22,17 @@ void vehicleStartup()
   }
   ROS_INFO_STREAM("Vehicle reached set speed");
 }
+
+void joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+{
+  // 0 - lewa galka, lewo/prawo
+  // 1 - lewa galka, gora/dol
+  // 3 - prawa galka, lewo/prawo
+  // 4 - prawa galka, gora/dol
+  
+  rotationMsg.data = (float)(joy->axes[0]) * 256;
+  rotationPub.publish(rotationMsg);
+
+  throttleMsg.data = (float)(joy->axes[1]) * 256;
+  throttlePub.publish(throttleMsg);
+}
